@@ -2,7 +2,7 @@
 
 import { DashboardSidebar } from "@/components/common/DashboardSidebar";
 import Header from "@/components/common/Header";
-import ECommerce from "@/components/eCommerce";
+import ECommerce from "@/components/ECommerce";
 import NotificationSection from "@/components/NotificationSection";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
