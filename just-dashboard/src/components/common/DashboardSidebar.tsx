@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Sidebar,
@@ -14,14 +14,14 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/components/ui/sidebar";
-import { Avatar, AvatarFallback } from "../ui/avatar";
+} from '@/components/ui/sidebar';
+import { Avatar, AvatarFallback } from '../ui/avatar';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "../ui/collapsible";
-import { ChevronRight } from "lucide-react";
+} from '../ui/collapsible';
+import { ChevronRight } from 'lucide-react';
 import {
   BookOpenIcon,
   ChartPieSliceIcon,
@@ -33,109 +33,109 @@ import {
   UserRectangleIcon,
   UsersFourIcon,
   UsersThreeIcon,
-} from "@phosphor-icons/react";
+} from '@phosphor-icons/react';
 
 export function DashboardSidebar() {
   const dashboardMenus: MenuItem[] = [
     {
-      label: "Dashboard",
+      label: 'Dashboard',
       subLabels: [
         {
-          label: "Default",
-          icon: () => <ChartPieSliceIcon weight="duotone" />,
+          label: 'Default',
+          icon: () => <ChartPieSliceIcon weight='duotone' />,
         },
         {
-          label: "eCommerce",
-          icon: () => <ShoppingBagOpenIcon weight="duotone" />,
+          label: 'eCommerce',
+          icon: () => <ShoppingBagOpenIcon weight='duotone' />,
           subLabels: [
-            { label: "Analytics" },
-            { label: "Orders" },
-            { label: "Products" },
-            { label: "Customers" },
-            { label: "Reports" },
+            { label: 'Analytics' },
+            { label: 'Orders' },
+            { label: 'Products' },
+            { label: 'Customers' },
+            { label: 'Reports' },
           ],
         },
         {
-          label: "Projects",
-          icon: () => <FolderIcon weight="duotone" />,
+          label: 'Projects',
+          icon: () => <FolderIcon weight='duotone' />,
           subLabels: [
-            { label: "Overview" },
-            { label: "Team Members" },
-            { label: "Tasks" },
-            { label: "Milestones" },
-            { label: "Files" },
-            { label: "Activity" },
+            { label: 'Overview' },
+            { label: 'Team Members' },
+            { label: 'Tasks' },
+            { label: 'Milestones' },
+            { label: 'Files' },
+            { label: 'Activity' },
           ],
         },
         {
-          label: "Online Courses",
-          icon: () => <BookOpenIcon weight="duotone" />,
+          label: 'Online Courses',
+          icon: () => <BookOpenIcon weight='duotone' />,
           subLabels: [
-            { label: "Design" },
-            { label: "Marketing" },
-            { label: "Photography" },
+            { label: 'Design' },
+            { label: 'Marketing' },
+            { label: 'Photography' },
           ],
         },
       ],
     },
 
     {
-      label: "Pages",
+      label: 'Pages',
       subLabels: [
         {
-          label: "User Profile",
-          icon: () => <UserRectangleIcon weight="duotone" />,
+          label: 'User Profile',
+          icon: () => <UserRectangleIcon weight='duotone' />,
           subLabels: [
-            { label: "Overview" },
-            { label: "Projects" },
-            { label: "Campaigns" },
-            { label: "Documents" },
-            { label: "Followers" },
+            { label: 'Overview' },
+            { label: 'Projects' },
+            { label: 'Campaigns' },
+            { label: 'Documents' },
+            { label: 'Followers' },
           ],
         },
         {
-          label: "Account",
-          icon: () => <UserGearIcon weight="duotone" />,
+          label: 'Account',
+          icon: () => <UserGearIcon weight='duotone' />,
           subLabels: [
-            { label: "Settings" },
-            { label: "Billing" },
-            { label: "Notifications" },
-            { label: "Security" },
-            { label: "Activity Log" },
+            { label: 'Settings' },
+            { label: 'Billing' },
+            { label: 'Notifications' },
+            { label: 'Security' },
+            { label: 'Activity Log' },
           ],
         },
         {
-          label: "Corporate",
-          icon: () => <UsersThreeIcon weight="duotone" />,
+          label: 'Corporate',
+          icon: () => <UsersThreeIcon weight='duotone' />,
           subLabels: [
-            { label: "About Us" },
-            { label: "Careers" },
-            { label: "Investor" },
-            { label: "Sustainability" },
-          ],
-        },
-
-        {
-          label: "Blog",
-          icon: () => <NotebookIcon weight="duotone" />,
-          subLabels: [
-            { label: "Latest Posts" },
-            { label: "Categories" },
-            { label: "Tags" },
-            { label: "Archives" },
-            { label: "Authors" },
+            { label: 'About Us' },
+            { label: 'Careers' },
+            { label: 'Investor' },
+            { label: 'Sustainability' },
           ],
         },
 
         {
-          label: "Social",
-          icon: () => <ChatsCircleIcon weight="duotone" />,
+          label: 'Blog',
+          icon: () => <NotebookIcon weight='duotone' />,
           subLabels: [
-            { label: "GitHub" },
-            { label: "Twitter" },
-            { label: "LinkedIn" },
-            { label: "Instagram" },
-            { label: "Pinterest" },
+            { label: 'Latest Posts' },
+            { label: 'Categories' },
+            { label: 'Tags' },
+            { label: 'Archives' },
+            { label: 'Authors' },
+          ],
+        },
+
+        {
+          label: 'Social',
+          icon: () => <ChatsCircleIcon weight='duotone' />,
+          subLabels: [
+            { label: 'GitHub' },
+            { label: 'Twitter' },
+            { label: 'LinkedIn' },
+            { label: 'Instagram' },
+            { label: 'Pinterest' },
           ],
         },
       ],
@@ -144,14 +144,14 @@ export function DashboardSidebar() {
 
   return (
     <Sidebar>
-      <div className="p-4 bg-background h-full flex flex-col">
-        <SidebarHeader className="flex flex-row items-center ">
+      <div className='bg-background flex h-full flex-col p-4'>
+        <SidebarHeader className='flex flex-row items-center'>
           <Avatar>
-            <AvatarFallback className="bg-secondary text-secondary-foreground">
+            <AvatarFallback className='bg-secondary text-secondary-foreground'>
               AG
             </AvatarFallback>
           </Avatar>
-          <span className="text-base font-semibold text-foreground">
+          <span className='text-foreground text-base font-semibold'>
             Aniruddha Gawali
           </span>
         </SidebarHeader>
@@ -159,14 +159,14 @@ export function DashboardSidebar() {
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupLabel>
-              <SidebarMenu className="flex-row text-base gap-8">
+              <SidebarMenu className='flex-row gap-8 text-base'>
                 <SidebarMenuItem>Favorites</SidebarMenuItem>
                 <SidebarMenuItem>Recently</SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupLabel>
 
             <SidebarGroupContent>
-              <SidebarMenu className="flex flex-col px-4 pt-2 gap-2">
+              <SidebarMenu className='flex flex-col gap-2 px-4 pt-2'>
                 <SidebarMenuItem>Overview</SidebarMenuItem>
                 <SidebarMenuItem>Projects</SidebarMenuItem>
               </SidebarMenu>
@@ -175,28 +175,28 @@ export function DashboardSidebar() {
 
           {dashboardMenus.map((menu) => (
             <SidebarGroup key={menu.label}>
-              <SidebarGroupLabel className="text-base">
+              <SidebarGroupLabel className='text-base'>
                 {menu.label}
               </SidebarGroupLabel>
 
               <SidebarGroupContent>
-                <SidebarMenu className="flex flex-col px-4 pt-2">
+                <SidebarMenu className='flex flex-col px-4 pt-2'>
                   {menu.subLabels?.map((item) => (
                     <SidebarMenuItem key={item.label}>
                       {!item.subLabels ? (
-                        <SidebarMenuButton className="px-7">
-                          {typeof item.icon === "function" && item.icon()}
-                          <span className="truncate">{item.label}</span>
+                        <SidebarMenuButton className='px-7'>
+                          {typeof item.icon === 'function' && item.icon()}
+                          <span className='truncate'>{item.label}</span>
                         </SidebarMenuButton>
                       ) : (
-                        <Collapsible className="group/collapsible">
-                          <CollapsibleTrigger className="w-full flex gap-2 group items-center justify-center">
+                        <Collapsible className='group/collapsible'>
+                          <CollapsibleTrigger className='group flex w-full items-center justify-center gap-2'>
                             <ChevronRight
-                              className="transition-transform  group-data-[state=open]/collapsible:rotate-90"
+                              className='transition-transform group-data-[state=open]/collapsible:rotate-90'
                               size={16}
                             />
                             <SidebarMenuButton>
-                              {typeof item.icon === "function" && item.icon()}
+                              {typeof item.icon === 'function' && item.icon()}
                               {item.label}
                             </SidebarMenuButton>
                           </CollapsibleTrigger>

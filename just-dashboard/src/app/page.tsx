@@ -1,24 +1,54 @@
-"use client";
+'use client';
 
-import { DashboardSidebar } from "@/components/common/DashboardSidebar";
-import Header from "@/components/common/Header";
-import ECommerce from "@/components/ECommerce";
-import NotificationSection from "@/components/NotificationSection";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { DashboardSidebar } from '@/components/common/DashboardSidebar';
+import Header from '@/components/common/Header';
+import ECommerce from '@/components/ECommerce';
+import RightSection from '@/components/RightSection';
+import { SidebarProvider } from '@/components/ui/sidebar';
+
+import { ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
+import { useRef, useState } from 'react';
+import { ImperativePanelHandle } from 'react-resizable-panels';
 
 export default function Home() {
+  const [isRightSectionOpen, setRightSectionOpen] = useState(false);
+  const rightSectionRef = useRef<ImperativePanelHandle>(null);
+
+  const onToggleRightSection = () => {
+    if (isRightSectionOpen) {
+      rightSectionRef.current?.collapse();
+      setRightSectionOpen(false);
+    } else {
+      rightSectionRef.current?.expand();
+      setRightSectionOpen(true);
+    }
+  };
+
   return (
-    <main className="bg-background min-h-screen min-w-screen">
+    <main className='bg-background h-screen min-w-screen'>
       <SidebarProvider>
-        <div className="flex flex-row w-full h-full">
+        <div className='flex h-screen w-full flex-row'>
           <DashboardSidebar />
 
-          <div className="flex-1 flex flex-col h-full">
-            <Header />
-            <ECommerce />
-          </div>
+          <ResizablePanelGroup direction='horizontal' className='h-full'>
+            <ResizablePanel defaultSize={20} className='scollbe h-screen'>
+              <Header onToggleRightSection={onToggleRightSection} />
+              <div className='h-full overflow-y-auto'>
+                <ECommerce />
+              </div>
+            </ResizablePanel>
 
-          <NotificationSection />
+            <ResizablePanel
+              ref={rightSectionRef}
+              maxSize={25}
+              collapsible={true}
+              collapsedSize={0}
+              onCollapse={() => setRightSectionOpen(false)}
+              onExpand={() => setRightSectionOpen(true)}
+            >
+              <RightSection />
+            </ResizablePanel>
+          </ResizablePanelGroup>
         </div>
       </SidebarProvider>
     </main>
