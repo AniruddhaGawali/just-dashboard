@@ -4,10 +4,10 @@ import {
   BellIcon,
   ClockCounterClockwiseIcon,
   CommandIcon,
-  MagnifyingGlassIcon,
   SidebarIcon,
   StarIcon,
   SunIcon,
+  MoonIcon,
 } from "@phosphor-icons/react";
 
 import {
@@ -15,15 +15,22 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Input } from "../ui/input";
+
 import { Search } from "lucide-react";
+import { useTheme } from "next-themes";
+import { Button } from "../ui/button";
 
 function Header() {
+  const { setTheme, theme } = useTheme();
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
   return (
-    <header className="w-full h-16 bg-white border-b border-border flex items-center justify-between px-4">
+    <header className="w-full h-16 bg-background border-b border-border flex items-center justify-between px-4">
       <div className="flex items-center gap-4">
         <SidebarTrigger size={"lg"}>
           <SidebarIcon size={32} weight="duotone" />
@@ -45,8 +52,8 @@ function Header() {
         </Breadcrumb>
       </div>
 
-      <div className="flex items-center gap-4">
-        <div className="flex items-center justify-center  bg-secondary px-4 py-2 rounded-md text-secondary-foreground/30">
+      <div className="flex items-center">
+        <div className="flex items-center justify-center bg-secondary px-2 py-1 rounded-md text-secondary-foreground/30 mr-2">
           <Search size={20} className="mr-1" />
           <input
             type="text"
@@ -56,10 +63,22 @@ function Header() {
           <CommandIcon className=" text-lg" />/
         </div>
 
-        <SunIcon className="text-lg" weight="duotone" />
-        <ClockCounterClockwiseIcon className="text-lg" weight="duotone" />
-        <BellIcon className="text-lg" weight="duotone" />
-        <SidebarIcon className="text-lg" weight="duotone" />
+        <Button onClick={toggleTheme} variant="ghost" size="icon">
+          {theme === "light" ? (
+            <SunIcon className="text-lg" weight="duotone" />
+          ) : (
+            <MoonIcon className="text-lg" weight="duotone" />
+          )}
+        </Button>
+        <Button variant="ghost" size="icon">
+          <ClockCounterClockwiseIcon className="text-lg" weight="duotone" />
+        </Button>
+        <Button variant="ghost" size="icon">
+          <BellIcon className="text-lg" weight="duotone" />
+        </Button>
+        <Button variant="ghost" size="icon">
+          <SidebarIcon className="text-lg" weight="duotone" />
+        </Button>
       </div>
     </header>
   );
