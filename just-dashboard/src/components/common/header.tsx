@@ -53,14 +53,15 @@ function Header() {
       </div>
 
       <div className="flex items-center">
-        <div className="flex items-center justify-center bg-secondary px-2 py-1 rounded-md text-secondary-foreground/30 mr-2">
+        <div className="flex items-center justify-center bg-black/20 text-foreground/50 px-2 py-1 rounded-md  mr-2">
           <Search size={20} className="mr-1" />
           <input
             type="text"
             placeholder="Search"
-            className="bg-secondary outline-none border-0 text-secondary-foreground shadow-none ring-0 focus:ring-0  text-sm  rounded-md placeholder:text-secondary-foreground/30"
+            className=" outline-none border-0  shadow-none ring-0 focus:ring-0  text-sm  rounded-md placeholder:text-secondary-foreground/30"
           />
-          <CommandIcon className=" text-lg" />/
+          <CommandIcon className=" text-lg" />
+          <span>/</span>
         </div>
 
         <Button onClick={toggleTheme} variant="ghost" size="icon">
