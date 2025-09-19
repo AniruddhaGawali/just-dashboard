@@ -3,7 +3,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function Home() {
   return (
-    <main>
+    <main className="bg-background h-screen w-screen">
       <SidebarProvider>
         <DashboardSidebar />
         <SidebarTrigger />
