@@ -1,17 +1,15 @@
 "use client";
 
 import { DashboardSidebar } from "@/components/common/DashboardSidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { SidebarIcon } from "@phosphor-icons/react";
+import Header from "@/components/common/header";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function Home() {
   return (
     <main className="bg-background h-screen w-screen">
       <SidebarProvider>
         <DashboardSidebar />
-        <SidebarTrigger>
-          <SidebarIcon size={32} weight="duotone" />
-        </SidebarTrigger>
+        <Header />
       </SidebarProvider>
     </main>
   );
