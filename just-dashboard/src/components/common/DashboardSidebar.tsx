@@ -151,7 +151,9 @@ export function DashboardSidebar() {
               AG
             </AvatarFallback>
           </Avatar>
-          <span>Aniruddha Gawali</span>
+          <span className="text-base font-semibold text-foreground">
+            Aniruddha Gawali
+          </span>
         </SidebarHeader>
 
         <SidebarContent>
