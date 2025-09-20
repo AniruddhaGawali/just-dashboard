@@ -2,7 +2,7 @@ using System;
 
 namespace JustDashboardBackend.Model;
 
-public class BarChartStatsData
+public class BarChartStatsDataModel
 {
     public string Month { get; set; } = string.Empty;
     public int Projection { get; set; }

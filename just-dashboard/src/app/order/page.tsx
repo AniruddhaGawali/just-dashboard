@@ -183,7 +183,7 @@ const columns: ColumnDef<Order>[] = [
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label='Select all'
         />
-        User ID
+        Order ID
       </div>
     ),
     cell: ({ row }) => {
