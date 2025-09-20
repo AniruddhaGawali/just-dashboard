@@ -77,7 +77,7 @@ function RightSection() {
   ];
 
   return (
-    <section className='border-border h-full overflow-y-scroll border-l p-8'>
+    <section className='border-border h-full w-fit overflow-x-hidden overflow-y-scroll border-l p-8'>
       <div>
         <h3 className='flex items-center text-base font-semibold'>
           Notification
