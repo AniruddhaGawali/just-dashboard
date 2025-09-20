@@ -34,7 +34,7 @@ import {
   UserRectangleIcon,
   UsersThreeIcon,
 } from '@phosphor-icons/react';
-import { Button } from '../ui/button';
+import Link from 'next/link';
 
 export function DashboardSidebar() {
   const dashboardMenus: MenuItem[] = [
@@ -44,13 +44,14 @@ export function DashboardSidebar() {
         {
           label: 'Default',
           icon: () => <ChartPieSliceIcon weight='duotone' />,
+          link: '/',
         },
         {
           label: 'eCommerce',
           icon: () => <ShoppingBagOpenIcon weight='duotone' />,
           subLabels: [
             { label: 'Analytics' },
-            { label: 'Orders' },
+            { label: 'Orders', link: '/order' },
             { label: 'Products' },
             { label: 'Customers' },
             { label: 'Reports' },
@@ -157,7 +158,7 @@ export function DashboardSidebar() {
           </span>
         </SidebarHeader>
 
-        <SidebarContent>
+        <SidebarContent className='gap-0'>
           <SidebarGroup>
             <SidebarGroupLabel>
               <SidebarMenu className='flex-row gap-8 text-base'>
@@ -173,20 +174,24 @@ export function DashboardSidebar() {
             <SidebarGroupContent>
               <SidebarMenu className='flex flex-col px-4 pt-2'>
                 <SidebarMenuItem className='flex items-center'>
-                  <DotOutlineIcon
-                    size={32}
-                    weight='fill'
-                    className='text-muted-foreground'
-                  />
-                  Overview
+                  <SidebarMenuButton>
+                    <DotOutlineIcon
+                      size={32}
+                      weight='fill'
+                      className='text-muted-foreground'
+                    />
+                    Overview
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem className='flex items-center'>
-                  <DotOutlineIcon
-                    size={32}
-                    weight='fill'
-                    className='text-muted-foreground'
-                  />
-                  Projects
+                  <SidebarMenuButton>
+                    <DotOutlineIcon
+                      size={32}
+                      weight='fill'
+                      className='text-muted-foreground'
+                    />
+                    Projects
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
@@ -203,10 +208,12 @@ export function DashboardSidebar() {
                   {menu.subLabels?.map((item) => (
                     <SidebarMenuItem key={item.label}>
                       {!item.subLabels ? (
-                        <SidebarMenuButton className='ml-5'>
-                          {typeof item.icon === 'function' && item.icon()}
-                          <span className='truncate'>{item.label}</span>
-                        </SidebarMenuButton>
+                        <Link href={item.link ?? '#'}>
+                          <SidebarMenuButton className='ml-5'>
+                            {typeof item.icon === 'function' && item.icon()}
+                            <span className='truncate'>{item.label}</span>
+                          </SidebarMenuButton>
+                        </Link>
                       ) : (
                         <Collapsible className='group/collapsible'>
                           <CollapsibleTrigger className='group flex w-full items-center justify-center gap-2'>
@@ -225,7 +232,9 @@ export function DashboardSidebar() {
                               {item.subLabels.map((subItem) => (
                                 <SidebarMenuSubItem key={subItem.label}>
                                   <SidebarMenuSubButton>
-                                    {subItem.label}
+                                    <Link href={subItem.link ?? '#'}>
+                                      <span>{subItem.label}</span>
+                                    </Link>
                                   </SidebarMenuSubButton>
                                 </SidebarMenuSubItem>
                               ))}

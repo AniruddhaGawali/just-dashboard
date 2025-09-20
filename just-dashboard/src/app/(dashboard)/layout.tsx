@@ -2,7 +2,6 @@
 
 import { DashboardSidebar } from '@/components/common/DashboardSidebar';
 import Header from '@/components/common/Header';
-import ECommerce from '@/components/ECommerce';
 import RightSection from '@/components/common/RightSection';
 import { SidebarProvider } from '@/components/ui/sidebar';
 
@@ -10,7 +9,11 @@ import { ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import { useRef, useState } from 'react';
 import { ImperativePanelHandle } from 'react-resizable-panels';
 
-export default function Home() {
+type Props = {
+  children: React.ReactNode;
+};
+
+function DashbaordLayout({ children }: Props) {
   const [isRightSectionOpen, setRightSectionOpen] = useState(false);
   const rightSectionRef = useRef<ImperativePanelHandle>(null);
 
@@ -23,7 +26,6 @@ export default function Home() {
       setRightSectionOpen(true);
     }
   };
-
   return (
     <main className='bg-background h-screen min-w-screen'>
       <SidebarProvider>
@@ -33,9 +35,7 @@ export default function Home() {
           <ResizablePanelGroup direction='horizontal' className='h-full'>
             <ResizablePanel defaultSize={20} className='scollbe h-screen'>
               <Header onToggleRightSection={onToggleRightSection} />
-              <div className='h-full overflow-y-auto'>
-                <ECommerce />
-              </div>
+              {children}
             </ResizablePanel>
 
             <ResizablePanel
@@ -55,3 +55,5 @@ export default function Home() {
     </main>
   );
 }
+
+export default DashbaordLayout;
