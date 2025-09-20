@@ -3,7 +3,7 @@
 import { DashboardSidebar } from '@/components/common/DashboardSidebar';
 import Header from '@/components/common/Header';
 import ECommerce from '@/components/ECommerce';
-import RightSection from '@/components/RightSection';
+import RightSection from '@/components/common/RightSection';
 import { SidebarProvider } from '@/components/ui/sidebar';
 
 import { ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
@@ -45,6 +45,7 @@ export default function Home() {
               collapsedSize={0}
               onCollapse={() => setRightSectionOpen(false)}
               onExpand={() => setRightSectionOpen(true)}
+              className='transition-all duration-300 ease-in-out'
             >
               <RightSection />
             </ResizablePanel>

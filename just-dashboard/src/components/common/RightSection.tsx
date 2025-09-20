@@ -1,5 +1,5 @@
 import { BroadcastIcon, BugBeetleIcon, UserIcon } from '@phosphor-icons/react';
-import { Separator } from './ui/separator';
+import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 
 function RightSection() {

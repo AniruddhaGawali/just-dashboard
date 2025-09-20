@@ -26,14 +26,15 @@ import {
   BookOpenIcon,
   ChartPieSliceIcon,
   ChatsCircleIcon,
+  DotOutlineIcon,
   FolderIcon,
   NotebookIcon,
   ShoppingBagOpenIcon,
   UserGearIcon,
   UserRectangleIcon,
-  UsersFourIcon,
   UsersThreeIcon,
 } from '@phosphor-icons/react';
+import { Button } from '../ui/button';
 
 export function DashboardSidebar() {
   const dashboardMenus: MenuItem[] = [
@@ -160,15 +161,33 @@ export function DashboardSidebar() {
           <SidebarGroup>
             <SidebarGroupLabel>
               <SidebarMenu className='flex-row gap-8 text-base'>
-                <SidebarMenuItem>Favorites</SidebarMenuItem>
-                <SidebarMenuItem>Recently</SidebarMenuItem>
+                <SidebarMenuItem className='text-muted-foreground'>
+                  Favorites
+                </SidebarMenuItem>
+                <SidebarMenuItem className='text-muted-foreground/50'>
+                  Recently
+                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupLabel>
 
             <SidebarGroupContent>
-              <SidebarMenu className='flex flex-col gap-2 px-4 pt-2'>
-                <SidebarMenuItem>Overview</SidebarMenuItem>
-                <SidebarMenuItem>Projects</SidebarMenuItem>
+              <SidebarMenu className='flex flex-col px-4 pt-2'>
+                <SidebarMenuItem className='flex items-center'>
+                  <DotOutlineIcon
+                    size={32}
+                    weight='fill'
+                    className='text-muted-foreground'
+                  />
+                  Overview
+                </SidebarMenuItem>
+                <SidebarMenuItem className='flex items-center'>
+                  <DotOutlineIcon
+                    size={32}
+                    weight='fill'
+                    className='text-muted-foreground'
+                  />
+                  Projects
+                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
@@ -184,7 +203,7 @@ export function DashboardSidebar() {
                   {menu.subLabels?.map((item) => (
                     <SidebarMenuItem key={item.label}>
                       {!item.subLabels ? (
-                        <SidebarMenuButton className='px-7'>
+                        <SidebarMenuButton className='ml-5'>
                           {typeof item.icon === 'function' && item.icon()}
                           <span className='truncate'>{item.label}</span>
                         </SidebarMenuButton>

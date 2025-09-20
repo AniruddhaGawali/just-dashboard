@@ -36,9 +36,12 @@ function Header({ onToggleRightSection }: Props) {
   return (
     <header className='bg-background border-border flex h-16 w-full items-center justify-between border-b px-4'>
       <div className='flex items-center gap-4'>
-        <SidebarTrigger size={'lg'}>
-          <SidebarIcon size={32} weight='duotone' />
-        </SidebarTrigger>
+        <SidebarTrigger
+          size={'lg'}
+          icon={<SidebarIcon className='text-lg' weight='duotone' />}
+        />
+        {/* <SidebarIcon className='text-lg' weight='duotone' />
+        </SidebarTrigger> */}
         <StarIcon className='text-lg' weight='duotone' />
 
         <Breadcrumb>

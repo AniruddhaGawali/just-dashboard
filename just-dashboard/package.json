@@ -25,7 +25,11 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-resizable-panels": "^3.0.6",
+    "recharts": "^2.15.4",
     "tailwind-merge": "^3.3.1"
+  },
+  "overrides": {
+    "react-is": "^19.0.0-rc-69d4b800-20241021"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
