@@ -16,15 +16,12 @@ interface UsePaginationProps {
 
 export const usePagination = ({
   totalPageCount,
-  siblingCount = 1, // Number of pages to show on each side of the current page
+  siblingCount = 1,
   currentPage,
 }: UsePaginationProps) => {
   const paginationRange = useMemo(() => {
-    // Total numbers to display: siblings + firstPage + lastPage + currentPage + 2*DOTS
     const totalPageNumbers = siblingCount + 5;
 
-    // Case 1: If the number of pages is less than the page numbers we want to show,
-    // we return the range [1..totalPageCount]
     if (totalPageNumbers >= totalPageCount) {
       return range(1, totalPageCount);
     }
@@ -35,15 +32,12 @@ export const usePagination = ({
       totalPageCount
     );
 
-    // We do not show dots when there is only one page number to be inserted
-    // between the extremes of sibling and the page limits i.e 1 and totalPageCount.
     const shouldShowLeftDots = leftSiblingIndex > 2;
     const shouldShowRightDots = rightSiblingIndex < totalPageCount - 2;
 
     const firstPageIndex = 1;
     const lastPageIndex = totalPageCount;
 
-    // Case 2: No left dots to show, but right dots to be shown
     if (!shouldShowLeftDots && shouldShowRightDots) {
       const leftItemCount = 3 + 2 * siblingCount;
       const leftRange = range(1, leftItemCount);
@@ -51,7 +45,6 @@ export const usePagination = ({
       return [...leftRange, DOTS, totalPageCount];
     }
 
-    // Case 3: No right dots to show, but left dots to be shown
     if (shouldShowLeftDots && !shouldShowRightDots) {
       const rightItemCount = 3 + 2 * siblingCount;
       const rightRange = range(
@@ -61,7 +54,6 @@ export const usePagination = ({
       return [firstPageIndex, DOTS, ...rightRange];
     }
 
-    // Case 4: Both left and right dots to be shown
     if (shouldShowLeftDots && shouldShowRightDots) {
       const middleRange = range(leftSiblingIndex, rightSiblingIndex);
       return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];

@@ -10,8 +10,6 @@ import {
   PlusIcon,
 } from '@phosphor-icons/react';
 import {
-  ArrowLeft,
-  ArrowRight,
   ArrowUpDownIcon,
   ChevronLeft,
   ChevronRight,
@@ -338,8 +336,8 @@ function DataTable<TData, TValue>({
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const [pagination, setPagination] = useState({
-    pageIndex: 0, // Start at the first page
-    pageSize: 10, // Rows per page
+    pageIndex: 0,
+    pageSize: 10,
   });
 
   const table = useReactTable({
