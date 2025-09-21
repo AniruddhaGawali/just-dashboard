@@ -1,6 +1,6 @@
 'use client';
 
-import ECommerce from '@/components/eCommerce';
+import ECommerce from '@/components/ECommerce';
 import {
   useGetDashboardStatsQuery,
   useUseGetDashboardBarChartQuery,
