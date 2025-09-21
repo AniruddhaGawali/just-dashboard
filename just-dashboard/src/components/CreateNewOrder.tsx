@@ -145,7 +145,7 @@ function AddNewOrder({
           </div>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
               <FormField
                 control={form.control}
                 name='address'
@@ -155,7 +155,7 @@ function AddNewOrder({
                     <FormControl>
                       <Input placeholder='Address' {...field} />
                     </FormControl>
-                    <FormDescription>
+                    <FormDescription className='text-xs'>
                       This is the address of the order.
                     </FormDescription>
                     <FormMessage />
@@ -172,14 +172,15 @@ function AddNewOrder({
                     <FormControl>
                       <Input placeholder='Project Name' {...field} />
                     </FormControl>
-                    <FormDescription>
+                    <FormDescription className='text-xs'>
                       This is the name of the project.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <div className='flex items-center justify-between'>
+
+              <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
                 <FormField
                   control={form.control}
                   name='date'
@@ -192,7 +193,7 @@ function AddNewOrder({
                             <Button
                               variant={'outline'}
                               className={cn(
-                                'w-[240px] pl-3 text-left font-normal',
+                                'w-full pl-3 text-left font-normal',
                                 !field.value && 'text-muted-foreground'
                               )}
                             >
@@ -217,13 +218,14 @@ function AddNewOrder({
                           />
                         </PopoverContent>
                       </Popover>
-                      <FormDescription>
+                      <FormDescription className='text-xs'>
                         This is the date of the order.
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name='status'
@@ -237,7 +239,7 @@ function AddNewOrder({
                               variant='outline'
                               role='combobox'
                               className={cn(
-                                'w-[200px] justify-between',
+                                'w-full justify-between',
                                 !field.value && 'text-muted-foreground'
                               )}
                             >
@@ -246,14 +248,14 @@ function AddNewOrder({
                                     (status) => status.value === field.value
                                   )?.label
                                 : 'Select Status'}
-                              <ChevronsUpDown className='opacity-50' />
+                              <ChevronsUpDown className='ml-2 h-4 w-4 opacity-50' />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className='w-[200px] p-0'>
+                        <PopoverContent className='w-full max-w-[200px] p-0'>
                           <Command>
                             <CommandList>
-                              <CommandEmpty>No framework found.</CommandEmpty>
+                              <CommandEmpty>No status found.</CommandEmpty>
                               <CommandGroup>
                                 {statuses.map((status) => (
                                   <CommandItem
@@ -279,7 +281,7 @@ function AddNewOrder({
                           </Command>
                         </PopoverContent>
                       </Popover>
-                      <FormDescription>
+                      <FormDescription className='text-xs'>
                         Select the status of the order.
                       </FormDescription>
                       <FormMessage />
@@ -301,46 +303,56 @@ function AddNewOrder({
                             variant='outline'
                             role='combobox'
                             className={cn(
-                              'w-[200px] justify-between',
+                              'w-full justify-between',
                               !field.value && 'text-muted-foreground'
                             )}
                           >
-                            <Avatar>
-                              <AvatarImage
-                                src={
-                                  users.find(
-                                    (user) => user.value === field.value
-                                  )?.label.avatar
-                                }
-                                alt={
-                                  users.find(
-                                    (user) => user.value === field.value
-                                  )?.label.name
-                                }
-                                sizes='20px'
-                              />
-                              <AvatarFallback>
-                                {users
-                                  .find((user) => user.value === field.value)
-                                  ?.label.name.charAt(0)}
-                              </AvatarFallback>
-                            </Avatar>
-                            {field.value
-                              ? users.find((user) => user.value === field.value)
-                                  ?.label.name
-                              : 'Select User'}
-                            <ChevronsUpDown className='opacity-50' />
+                            {field.value ? (
+                              <div className='flex items-center gap-2 truncate'>
+                                <Avatar className='h-6 w-6'>
+                                  <AvatarImage
+                                    src={
+                                      users.find(
+                                        (user) => user.value === field.value
+                                      )?.label.avatar
+                                    }
+                                    alt={
+                                      users.find(
+                                        (user) => user.value === field.value
+                                      )?.label.name
+                                    }
+                                  />
+                                  <AvatarFallback className='text-xs'>
+                                    {users
+                                      .find(
+                                        (user) => user.value === field.value
+                                      )
+                                      ?.label.name.charAt(0)}
+                                  </AvatarFallback>
+                                </Avatar>
+                                <span className='truncate'>
+                                  {
+                                    users.find(
+                                      (user) => user.value === field.value
+                                    )?.label.name
+                                  }
+                                </span>
+                              </div>
+                            ) : (
+                              'Select User'
+                            )}
+                            <ChevronsUpDown className='ml-2 h-4 w-4 opacity-50' />
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent className='w-[200px] p-0'>
+                      <PopoverContent className='w-full max-w-[280px] p-0'>
                         <Command>
                           <CommandInput
-                            placeholder='Search framework...'
+                            placeholder='Search user...'
                             className='h-9'
                           />
                           <CommandList>
-                            <CommandEmpty className='flex items-center justify-center'>
+                            <CommandEmpty className='flex items-center justify-center p-2'>
                               {isLoading ? (
                                 <LoadingSpinner />
                               ) : (
@@ -356,19 +368,20 @@ function AddNewOrder({
                                     form.setValue('userId', user.value);
                                   }}
                                 >
-                                  <Avatar>
-                                    <AvatarImage
-                                      src={user.label.avatar}
-                                      alt={user.label.name}
-                                      sizes='20px'
-                                    />
-                                    <AvatarFallback>
-                                      {user.label.name.charAt(0)}
-                                    </AvatarFallback>
-                                  </Avatar>
-                                  <span className='ml-2'>
-                                    {user.label.name}
-                                  </span>
+                                  <div className='flex w-full items-center gap-2'>
+                                    <Avatar className='h-6 w-6'>
+                                      <AvatarImage
+                                        src={user.label.avatar}
+                                        alt={user.label.name}
+                                      />
+                                      <AvatarFallback className='text-xs'>
+                                        {user.label.name.charAt(0)}
+                                      </AvatarFallback>
+                                    </Avatar>
+                                    <span className='truncate'>
+                                      {user.label.name}
+                                    </span>
+                                  </div>
                                   <Check
                                     className={cn(
                                       'ml-auto',
@@ -384,8 +397,8 @@ function AddNewOrder({
                         </Command>
                       </PopoverContent>
                     </Popover>
-                    <FormDescription>
-                      This is the language that will be used in the dashboard.
+                    <FormDescription className='text-xs'>
+                      Select the user for this order.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -393,10 +406,11 @@ function AddNewOrder({
               />
 
               <Button
-                className='w-full'
+                className='mt-6 w-full'
                 disabled={isCreating || isLoading}
                 type='submit'
               >
+                {isCreating ? <LoadingSpinner className='mr-2' /> : null}
                 Submit
               </Button>
             </form>
