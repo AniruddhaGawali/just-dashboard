@@ -58,7 +58,6 @@ import {
 } from '@/redux/slice/orderApi';
 import { Skeleton } from '@/components/ui/skeleton';
 import AddNewOrder from '@/components/CreateNewOrder';
-import Head from 'next/head';
 
 TimeAgo.addDefaultLocale(en);
 
@@ -408,10 +407,6 @@ function OrderPage() {
 
   return (
     <>
-      <Head>
-        <title>Dashboard</title>
-        <meta name='description' content='E-Commerce Dashboard' />
-      </Head>
       <section className='h-full w-full flex-1 overflow-y-scroll p-8 pb-20'>
         <h2 className='text-xl font-semibold'>Order List</h2>
 

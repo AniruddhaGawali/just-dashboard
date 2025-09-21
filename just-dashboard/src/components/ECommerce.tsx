@@ -36,7 +36,7 @@ import {
   TrendDownIcon,
   TrendUpIcon,
 } from '@phosphor-icons/react';
-import RoundedDoughnutChart from './RoundedDoughnutChart';
+import RoundedDoughnutChart from './common/RoundedDoughnutChart';
 
 // --- TYPE DEFINITIONS (Assuming these are defined elsewhere) ---
 // type DashboardStats = { title: string; value: number; growth_percent: number };

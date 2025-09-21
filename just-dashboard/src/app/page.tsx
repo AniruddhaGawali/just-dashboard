@@ -1,7 +1,6 @@
 'use client';
 
 import ECommerce from '@/components/ECommerce';
-import Head from 'next/head';
 import {
   useGetDashboardStatsQuery,
   useUseGetDashboardBarChartQuery,
@@ -21,10 +20,6 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>Dashboard</title>
-        <meta name='description' content='E-Commerce Dashboard' />
-      </Head>
       <div className='h-full overflow-y-auto'>
         <ECommerce
           dashboardStats={dashboardStats}
