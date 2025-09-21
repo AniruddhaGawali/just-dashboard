@@ -1,25 +1,21 @@
 'use client';
 
-import {
-  DotOutlineIcon,
-  TrendDownIcon,
-  TrendUpIcon,
-} from '@phosphor-icons/react';
-import React from 'react';
-
+import { useTheme } from 'next-themes';
+import Image from 'next/image';
 import {
   Bar,
   BarChart,
   CartesianGrid,
   Line,
+  LineChart,
   XAxis,
   YAxis,
-  LineChart,
 } from 'recharts';
+import { ChartData } from 'chart.js';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
-  type ChartConfig,
+  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
@@ -27,55 +23,38 @@ import {
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-
-import { Separator } from './ui/separator';
-import Image from 'next/image';
-import { ChartData } from 'chart.js';
-import RoundedDoughnutChart from './RoundedDoughnutChart';
-import { useTheme } from 'next-themes';
-
-import { Skeleton } from './ui/skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Separator } from '@/components/ui/separator';
 import { capitalize, formatNumber } from '@/utils';
+import {
+  DotOutlineIcon,
+  TrendDownIcon,
+  TrendUpIcon,
+} from '@phosphor-icons/react';
+import RoundedDoughnutChart from './RoundedDoughnutChart';
 
-const tableData = [
-  {
-    name: 'ASOS Ridley High Waist',
-    price: '$79.49',
-    quantity: 82,
-    amount: '$6,518.18',
-  },
-  {
-    name: 'Marco Lightweight Shirt',
-    price: '$128.50',
-    quantity: 37,
-    amount: '$4,754.50',
-  },
-  {
-    name: 'Half Sleeve Shirt',
-    price: '$39.99',
-    quantity: 64,
-    amount: '$2,559.36',
-  },
-  {
-    name: 'Lightweight Jacket',
-    price: '$20.00',
-    quantity: 184,
-    amount: '$3,680.00',
-  },
-  {
-    name: 'Marco Shoes',
-    price: '$79.49',
-    quantity: 64,
-    amount: '$1,965.81',
-  },
-];
+// --- TYPE DEFINITIONS (Assuming these are defined elsewhere) ---
+// type DashboardStats = { title: string; value: number; growth_percent: number };
+// type DashboardBarChartData = {
+//   month: string;
+//   projection: number;
+//   actual: number;
+// };
+// type DashboardPieChartData = { [key: string]: number };
+// type DashboardMapChartData = { [key: string]: number };
+// type DashboardTableData = {
+//   name: string;
+//   price: string;
+//   quantity: number;
+//   amount: string;
+// };
 
+// --- CHART CONFIG (Remains the same) ---
 const chartConfig = {
   projection: {
     label: 'Projections',
@@ -87,18 +66,20 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
+// --- RESPONSIVE CHILD COMPONENTS ---
+
 const ECommerceStats = ({
   dashboardStats,
 }: {
   dashboardStats?: DashboardStats[];
 }) => {
+  // ... (Component logic remains the same)
   const colors = [
     'bg-primary text-primary-foreground',
     'bg-card text-card-foreground',
     'bg-card text-card-foreground',
     'bg-primary/85 text-primary-foreground',
   ];
-
   const formatNumberType = [null, null, 'currency', null];
 
   if (!dashboardStats) {
@@ -115,18 +96,18 @@ const ECommerceStats = ({
   }
 
   return (
-    <div className='grid h-full grid-cols-2 grid-rows-2 gap-4'>
+    <div className='grid h-full grid-cols-1 gap-4 @md:grid-cols-2'>
       {dashboardStats.map((stat, index) => (
         <div
           key={stat.title + index}
-          className={`flex min-h-[120px] w-full flex-col items-start justify-around rounded-2xl px-8 py-4 ${colors[index]} `}
+          className={`flex min-h-[120px] w-full flex-col justify-center rounded-2xl p-8 lg:p-4 xl:p-6 ${colors[index]}`}
         >
           <div className='text-md font-semibold'>{stat.title}</div>
-          <div className='flex items-start justify-center gap-4'>
-            <div className='text-3xl font-semibold'>
+          <div className='mt-2 flex flex-row items-start justify-start gap-4 lg:flex-col lg:gap-2 xl:flex-row xl:gap-4'>
+            <div className='text-xl font-semibold lg:text-2xl xl:text-3xl'>
               {formatNumber(stat.value, formatNumberType[index])}
             </div>
-            <div className='flex items-center justify-center gap-2 text-sm'>
+            <div className='flex items-center gap-1 text-xs xl:text-sm'>
               {stat.growth_percent}%
               {stat.growth_percent >= 0 ? (
                 <TrendUpIcon size={16} weight='duotone' />
@@ -153,7 +134,6 @@ function ChartBarStacked({ data }: { data?: DashboardBarChartData[] }) {
       </Skeleton>
     );
   }
-
   return (
     <Card className='border-none'>
       <CardHeader>
@@ -174,8 +154,6 @@ function ChartBarStacked({ data }: { data?: DashboardBarChartData[] }) {
               tickLine={false}
               axisLine={false}
               tickMargin={10}
-              // tickCount={5}
-              ticks={[0, 10, 20, 30, 40, 50, 60]}
               tickFormatter={(value) => `${value}M`}
             />
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
@@ -212,18 +190,18 @@ function ChartLineMultiple({ data }: { data?: DashboardBarChartData[] }) {
       </Skeleton>
     );
   }
-
   return (
-    <Card className='max-h-xl w-full border-none'>
+    <Card className='w-full border-none'>
       <CardHeader>
-        <CardTitle className='flex items-center gap-4'>
+        <CardTitle className='flex flex-wrap items-center gap-x-4 gap-y-2'>
           <span>Revenue</span>
-          <Separator orientation='vertical' className='!h-[20px] !w-[2px]' />
-
+          <Separator
+            orientation='vertical'
+            className='hidden h-[20px] w-[2px] sm:block'
+          />
           <span className='flex items-center text-sm font-normal'>
             <DotOutlineIcon size={32} weight='fill' /> Current Week $58,211
           </span>
-
           <span className='flex items-center text-sm font-normal'>
             <DotOutlineIcon size={32} weight='fill' /> Previous Week $68,768
           </span>
@@ -251,9 +229,6 @@ function ChartLineMultiple({ data }: { data?: DashboardBarChartData[] }) {
               tickLine={false}
               axisLine={false}
               tickMargin={10}
-              tickCount={3}
-              domain={[0, 100]}
-              ticks={[0, 25, 50, 75, 100]}
               tickFormatter={(value) => `${value}M`}
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
@@ -296,7 +271,6 @@ function ChartMap({
       </Skeleton>
     );
   }
-
   const mapChartPrice = Object.values(data);
   const mapTotalRevenue = mapChartPrice.reduce((a, b) => a + b, 0);
   const mapChartData = mapChartPrice.map((price, index) => ({
@@ -305,35 +279,30 @@ function ChartMap({
   }));
 
   return (
-    <Card className='h-full border-none'>
+    <Card className='h-full w-full border-none'>
       <CardHeader>
         <CardTitle>Revenue by Location</CardTitle>
       </CardHeader>
-      <CardContent className='flex flex-col gap-8'>
+      <CardContent className='flex h-full flex-col gap-8'>
         <Image
           src={isDark ? '/map-dark.png' : '/map-light.png'}
           alt='Revenue by Location'
-          layout='responsive'
           width={300}
           height={200}
+          className='w-full'
         />
-
-        <div className='mt-4 space-y-4'>
+        <div className='flex-grow space-y-4'>
           {mapChartData.map((item) => (
-            <div
-              key={item.location}
-              className='flex flex-col items-center justify-between'
-            >
+            <div key={item.location} className='flex flex-col justify-between'>
               <div className='flex w-full items-center justify-between space-y-1 text-sm'>
                 <div>{item.location}</div>
                 <div className='font-medium'>
                   {(item.revenue / 1000).toFixed(0)}k
                 </div>
               </div>
-
               <div className='bg-muted h-1 w-full overflow-hidden rounded-full'>
                 <div
-                  className='bg-secondary h-full'
+                  className='bg-primary h-full'
                   style={{
                     width: `${(item.revenue / mapTotalRevenue) * 100}%`,
                   }}
@@ -359,35 +328,35 @@ function TableStats({ data }: { data?: DashboardTableData[] }) {
       </Skeleton>
     );
   }
-
   return (
     <Card className='h-full border-none'>
       <CardHeader>
         <CardTitle>Top Selling Products</CardTitle>
       </CardHeader>
       <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow className=''>
-              <TableHead className='text-muted-foreground w-[100px]'>
-                Name
-              </TableHead>
-              <TableHead className='text-muted-foreground'>Price</TableHead>
-              <TableHead className='text-muted-foreground'>Quantity</TableHead>
-              <TableHead className='text-muted-foreground'>Amount</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.map((item) => (
-              <TableRow key={item.name} className='border-none'>
-                <TableCell className='h-14 font-medium'>{item.name}</TableCell>
-                <TableCell>{item.price}</TableCell>
-                <TableCell>{item.quantity}</TableCell>
-                <TableCell>{item.amount}</TableCell>
+        {/* Added a wrapper for horizontal scrolling on small screens */}
+        <div className='w-full overflow-x-auto'>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Price</TableHead>
+                <TableHead>Quantity</TableHead>
+                <TableHead className='text-right'>Amount</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {data.map((item) => (
+                <TableRow key={item.name} className='border-none'>
+                  <TableCell className='font-medium'>{item.name}</TableCell>
+                  <TableCell>{item.price}</TableCell>
+                  <TableCell>{item.quantity}</TableCell>
+                  <TableCell className='text-right'>{item.amount}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </CardContent>
     </Card>
   );
@@ -405,7 +374,6 @@ function PieChartStats({ data }: { data?: DashboardPieChartData }) {
       </Skeleton>
     );
   }
-
   const pieChartPrice = Object.values(data);
   const pieChartPriceSum = pieChartPrice.reduce((a, b) => a + b, 0);
   const piechartData: ChartData<'doughnut'> = {
@@ -414,12 +382,9 @@ function PieChartStats({ data }: { data?: DashboardPieChartData }) {
     ),
     datasets: [
       {
-        data: [
-          parseFloat(((pieChartPrice[0] / pieChartPriceSum) * 100).toFixed(1)),
-          parseFloat(((pieChartPrice[1] / pieChartPriceSum) * 100).toFixed(1)),
-          parseFloat(((pieChartPrice[2] / pieChartPriceSum) * 100).toFixed(1)),
-          parseFloat(((pieChartPrice[3] / pieChartPriceSum) * 100).toFixed(1)),
-        ],
+        data: pieChartPrice.map((price) =>
+          parseFloat(((price / pieChartPriceSum) * 100).toFixed(1))
+        ),
         backgroundColor: ['#95A4FC', '#C6C7F8', '#BAEDBD', '#B1E3FF'],
         borderWidth: 0,
       },
@@ -431,7 +396,7 @@ function PieChartStats({ data }: { data?: DashboardPieChartData }) {
       <CardHeader className='items-center pb-0'>
         <CardTitle>Total Sales</CardTitle>
       </CardHeader>
-      <CardContent className='flex h-full flex-1 flex-col justify-between pb-0'>
+      <CardContent className='flex flex-1 flex-col justify-between pb-4'>
         <RoundedDoughnutChart piechartData={piechartData} />
         <div className='mt-4 flex flex-col gap-4'>
           {piechartData.labels?.map((label, index) => (
@@ -461,6 +426,8 @@ function PieChartStats({ data }: { data?: DashboardPieChartData }) {
   );
 }
 
+// --- MAIN ECOMMERCE COMPONENT WITH RESPONSIVE GRID ---
+
 type ECommerceProp = {
   dashboardStats?: DashboardStats[];
   dashboardBarChartData?: DashboardBarChartData[];
@@ -482,26 +449,26 @@ const ECommerce = ({
   return (
     <section className='w-full flex-1 p-8 pb-20'>
       <h2 className='text-xl font-semibold'>eCommerce</h2>
-      <div className='mt-4 grid grid-cols-4 gap-4'>
-        <div className='col-span-2'>
+      <div className='mt-4 grid grid-cols-1 gap-4 lg:grid-cols-4'>
+        <div className='lg:col-span-2'>
           <ECommerceStats dashboardStats={dashboardStats} />
         </div>
 
-        <div className='col-span-2'>
+        <div className='lg:col-span-2'>
           <ChartBarStacked data={dashboardBarChartData} />
         </div>
 
-        <div className='col-span-3'>
+        <div className='lg:col-span-3'>
           <ChartLineMultiple data={dashboardLineChartData} />
         </div>
-        <div className='col-span-1'>
+        <div className='lg:col-span-1'>
           <ChartMap isDark={theme === 'dark'} data={dashboardMapChartData} />
         </div>
 
-        <div className='col-span-3'>
+        <div className='lg:col-span-3'>
           <TableStats data={dashboardTableData} />
         </div>
-        <div className='col-span-1'>
+        <div className='lg:col-span-1'>
           <PieChartStats data={dashboardPieChartData} />
         </div>
       </div>
