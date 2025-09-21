@@ -41,3 +41,8 @@ type DashboardTableData = {
   quantity: number;
   amount: number;
 };
+
+interface WindowSize {
+  width: number | undefined;
+  height: number | undefined;
+}

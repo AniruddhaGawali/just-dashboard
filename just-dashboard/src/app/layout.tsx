@@ -12,6 +12,16 @@ import { ImperativePanelHandle } from 'react-resizable-panels';
 import RightSection from '@/components/common/RightSection';
 import ReduxProvider from '@/provider/ReduxProvider';
 
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import { useWindowSize } from '@/hooks/useWindowSize';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
@@ -21,6 +31,9 @@ export default function RootLayout({
 }>) {
   const [isRightSectionOpen, setRightSectionOpen] = useState(false);
   const rightSectionRef = useRef<ImperativePanelHandle>(null);
+  const { width, height } = useWindowSize();
+
+  const shouldSheetOpen = width ? width < 1024 : false;
 
   const onToggleRightSection = () => {
     if (isRightSectionOpen) {
@@ -54,12 +67,8 @@ export default function RootLayout({
                       defaultSize={75}
                       className='flex h-screen flex-col'
                     >
-                      {/* The Header is now in the root layout */}
                       <Header onToggleRightSection={onToggleRightSection} />
-                      <div className='flex-1 overflow-y-auto'>
-                        {/* The 'children' prop renders the current page */}
-                        {children}
-                      </div>
+                      <div className='flex-1 overflow-y-auto'>{children}</div>
                     </ResizablePanel>
                     <ResizablePanel
                       ref={rightSectionRef}
@@ -68,10 +77,23 @@ export default function RootLayout({
                       collapsedSize={0}
                       onCollapse={() => setRightSectionOpen(false)}
                       onExpand={() => setRightSectionOpen(true)}
-                      className='transition-all duration-300 ease-in-out'
+                      className='hidden transition-all duration-300 ease-in-out lg:flex'
                     >
                       <RightSection />
                     </ResizablePanel>
+
+                    {shouldSheetOpen && (
+                      <Sheet
+                        onOpenChange={() =>
+                          setRightSectionOpen(!isRightSectionOpen)
+                        }
+                        open={isRightSectionOpen}
+                      >
+                        <SheetContent className='w-[400px] sm:w-[540px]'>
+                          <RightSection />
+                        </SheetContent>
+                      </Sheet>
+                    )}
                   </ResizablePanelGroup>
                 </div>
               </SidebarProvider>
