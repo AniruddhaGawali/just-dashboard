@@ -6,6 +6,8 @@ import {
   BellIcon,
   ClockCounterClockwiseIcon,
   MoonIcon,
+  SidebarIcon,
+  StarIcon,
   SunIcon,
 } from '@phosphor-icons/react';
 import { CommandIcon, Search } from 'lucide-react';
@@ -39,8 +41,13 @@ function Header({ onToggleRightSection }: Props) {
       {/* Left Section: Hamburger Menu (Mobile) & Breadcrumbs (Desktop) */}
       <div className='flex items-center gap-4'>
         {/* Hamburger menu trigger, visible only on screens smaller than md */}
-        <div className='md:hidden'>
-          <SidebarTrigger />
+        <div className='flex items-center gap-4'>
+          <SidebarTrigger
+            size={'lg'}
+            icon={<SidebarIcon className='text-lg' weight='duotone' />}
+          />
+
+          <StarIcon className='text-lg' weight='duotone' />
         </div>
 
         {/* Breadcrumbs, hidden on screens smaller than md */}
@@ -53,8 +60,8 @@ function Header({ onToggleRightSection }: Props) {
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {pathSegments.map((segment, index) => (
-                <BreadcrumbSeparator key={index}>
-                  /
+                <>
+                  <BreadcrumbSeparator key={index}>/</BreadcrumbSeparator>
                   <BreadcrumbItem>
                     <BreadcrumbLink
                       href={`/${pathSegments.slice(0, index + 1).join('/')}`}
@@ -63,7 +70,7 @@ function Header({ onToggleRightSection }: Props) {
                       {capitalize(segment)}
                     </BreadcrumbLink>
                   </BreadcrumbItem>
-                </BreadcrumbSeparator>
+                </>
               ))}
             </BreadcrumbList>
           </Breadcrumb>

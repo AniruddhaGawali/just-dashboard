@@ -11,14 +11,17 @@ type Order = {
   project: string;
   address: string;
   date: string;
-  status:
-    | 'InProgress'
-    | 'Complete'
-    | 'Approved'
-    | 'Rejected'
-    | 'Pending'
-    | number;
+  status: OrderStatus | number;
 };
+
+type CreateOrder = {
+  userId: string;
+  project: string;
+  address: string;
+  date: Date;
+  status: OrderStatus | number;
+};
+
 enum OrderStatus {
   InProgress = 'In Progress',
   Complete = 'Complete',
@@ -27,6 +30,7 @@ enum OrderStatus {
   Pending = 'Pending',
 }
 type User = {
+  id: number;
   name: string;
   avatar_url: string;
 };

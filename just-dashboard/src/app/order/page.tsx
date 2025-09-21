@@ -10,7 +10,6 @@ import {
   FunnelSimpleIcon,
   PlusIcon,
   SealWarningIcon,
-  Trash,
   TrashIcon,
 } from '@phosphor-icons/react';
 import {
@@ -44,8 +43,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
@@ -60,125 +57,21 @@ import {
   useGetOrdersQuery,
 } from '@/redux/slice/orderApi';
 import { Skeleton } from '@/components/ui/skeleton';
+import AddNewOrder from '@/components/CreateNewOrder';
+
 TimeAgo.addDefaultLocale(en);
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
-
-// const orderData: Order[] = [
-//   {
-//     id: 'CM9801',
-//     user: {
-//       name: 'Natali Craig',
-//       avatarUrl: 'https://i.pravatar.cc/150?img=2',
-//     },
-//     project: 'Landing Page',
-//     address: 'Meadow Lane Oakland',
-//     date: Date.now().toString(),
-//     status: 'In Progress',
-//   },
-//   {
-//     id: 'CM9802',
-//     user: {
-//       name: 'Kate Morrison',
-//       avatarUrl: 'https://i.pravatar.cc/150?img=3',
-//     },
-//     project: 'CRM Admin pages',
-//     address: 'Larry San Francisco',
-//     date: Date.now().toString(),
-//     status: 'Complete',
-//   },
-//   {
-//     id: 'CM9803',
-//     user: {
-//       name: 'Drew Cano',
-//       avatarUrl: 'https://i.pravatar.cc/150?img=4',
-//     },
-//     project: 'Client Project',
-//     address: 'Bagwell Avenue Ocala',
-//     date: Date.now().toString(),
-//     status: 'Pending',
-//   },
-//   {
-//     id: 'CM9804',
-//     user: {
-//       name: 'Orlando Diggs',
-//       avatarUrl: 'https://i.pravatar.cc/150?img=5',
-//     },
-//     project: 'Admin Dashboard',
-//     address: 'Washburn Baton Rouge',
-//     date: Date.now().toString(),
-//     status: 'Approved',
-//   },
-//   {
-//     id: 'CM9805',
-//     user: {
-//       name: 'Andi Lane',
-//       avatarUrl: 'https://i.pravatar.cc/150?img=6',
-//     },
-//     project: 'App Landing Page',
-//     address: 'Nest Lane Olivette',
-//     date: 'Feb 2, 2023',
-//     status: 'Rejected',
-//   },
-//   {
-//     id: 'CM9801',
-//     user: {
-//       name: 'Natali Craig',
-//       avatarUrl: 'https://i.pravatar.cc/150?img=7',
-//     },
-//     project: 'Landing Page',
-//     address: 'Meadow Lane Oakland',
-//     date: Date.now().toString(),
-//     status: 'In Progress',
-//   },
-//   {
-//     id: 'CM9802',
-//     user: {
-//       name: 'Kate Morrison',
-//       avatarUrl: 'https://i.pravatar.cc/150?img=8',
-//     },
-//     project: 'CRM Admin pages',
-//     address: 'Larry San Francisco',
-//     date: Date.now().toString(),
-//     status: 'Complete',
-//   },
-//   {
-//     id: 'CM9803',
-//     user: {
-//       name: 'Drew Cano',
-//       avatarUrl: 'https://i.pravatar.cc/150?img=9',
-//     },
-//     project: 'Client Project',
-//     address: 'Bagwell Avenue Ocala',
-//     date: Date.now().toString(),
-//     status: 'Pending',
-//   },
-//   {
-//     id: 'CM9804',
-//     user: {
-//       name: 'Orlando Diggs',
-//       avatarUrl: 'https://i.pravatar.cc/150?img=10',
-//     },
-//     project: 'Admin Dashboard',
-//     address: 'Washburn Baton Rouge',
-//     date: Date.now().toString(),
-//     status: 'Approved',
-//   },
-//   {
-//     id: 'CM9805',
-//     user: {
-//       name: 'Andi Lane',
-//       avatarUrl: 'https://i.pravatar.cc/150?img=11',
-//     },
-//     project: 'App Landing Page',
-//     address: 'Nest Lane Olivette',
-//     date: 'Feb 2, 2023',
-//     status: 'Rejected',
-//   },
-// ];
+enum OrderStatus {
+  InProgress = 'In Progress',
+  Complete = 'Complete',
+  Approved = 'Approved',
+  Rejected = 'Rejected',
+  Pending = 'Pending',
+}
 
 const getColumns = (
   deleteHandler: (id: string) => void
@@ -283,23 +176,23 @@ const getColumns = (
       const status = row.original.status;
       let statusColor = '';
       switch (status) {
-        case 'InProgress':
+        case OrderStatus.InProgress:
         case 2:
           statusColor = 'text-[#8A8CD9]';
           break;
-        case 'Complete':
+        case OrderStatus.Complete:
         case 3:
           statusColor = 'text-[#4AA785]';
           break;
-        case 'Approved':
+        case OrderStatus.Approved:
         case 1:
           statusColor = 'text-[#FFC555]';
           break;
-        case 'Rejected':
+        case OrderStatus.Rejected:
         case 4:
           statusColor = 'text-gray-500/80';
           break;
-        case 'Pending':
+        case OrderStatus.Pending:
         case 0:
           statusColor = 'text-[#59A8D4]';
           break;
@@ -319,7 +212,7 @@ const getColumns = (
                 : status === 2
                   ? 'In Progress'
                   : status === 3
-                    ? 'Complete'
+                    ? 'Completed'
                     : status === 4
                       ? 'Rejected'
                       : status
@@ -497,18 +390,18 @@ function OrderPage() {
     refetch,
     isFetching,
   } = useGetOrdersQuery();
-  const [deleteOrder, { isLoading: isDeleting, error: deleteError }] =
-    useDeleteOrderMutation();
+
+  const [deleteOrder, { error: deleteError }] = useDeleteOrderMutation();
 
   const deleteAOrder = async (id: string) => {
     try {
       await deleteOrder(id).unwrap();
-      // You could show a success toast here if needed
     } catch (error) {
-      // Handle error here - show a toast notification, etc.
       console.error('Failed to delete order:', error);
     }
   };
+
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 
   const columns = getColumns(deleteAOrder);
 
@@ -531,7 +424,11 @@ function OrderPage() {
 
       <div className='bg-card mt-4 flex items-center justify-between rounded-lg p-1'>
         <div className='flex items-center rounded-md px-2 py-1'>
-          <Button size={'icon'} variant={'ghost'}>
+          <Button
+            size={'icon'}
+            variant={'ghost'}
+            onClick={() => setIsCreateDialogOpen(true)}
+          >
             <PlusIcon size={20} />
           </Button>
           <Button size={'icon'} variant={'ghost'}>
@@ -571,6 +468,10 @@ function OrderPage() {
           <div className='p-4 text-center'>No orders found.</div>
         )}
       </div>
+      <AddNewOrder
+        isOpen={isCreateDialogOpen}
+        onOpenChange={() => setIsCreateDialogOpen(!isCreateDialogOpen)}
+      />
     </section>
   );
 }

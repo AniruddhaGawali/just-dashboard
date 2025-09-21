@@ -59,7 +59,6 @@ namespace JustDashboardBackend.Controller
         {
             try
             {
-
                 if (ModelState.IsValid == false)
                 {
                     return BadRequest(ModelState);

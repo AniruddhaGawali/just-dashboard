@@ -12,14 +12,7 @@ import { ImperativePanelHandle } from 'react-resizable-panels';
 import RightSection from '@/components/common/RightSection';
 import ReduxProvider from '@/provider/ReduxProvider';
 
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { useWindowSize } from '@/hooks/useWindowSize';
 
 const inter = Inter({ subsets: ['latin'] });
