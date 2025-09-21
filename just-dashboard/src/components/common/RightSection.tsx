@@ -84,24 +84,19 @@ function RightSection() {
         </h3>
         <div className='scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-border scrollbar-track-transparent mt-6 flex max-h-[400px] flex-col gap-4 overflow-y-auto'>
           {notificationData.map((notification, index) => (
-            <>
-              <div
-                key={index}
-                className='border-border flex items-center gap-3'
-              >
-                <div className='bg-primary text-primary-foreground rounded-lg p-2'>
-                  {notification.icon}
-                </div>
-                <div>
-                  <p className='w-[90%] truncate overflow-hidden font-medium whitespace-nowrap'>
-                    {notification.title}
-                  </p>
-                  <p className='text-muted-foreground text-sm'>
-                    {notification.time}
-                  </p>
-                </div>
+            <div key={index} className='border-border flex items-center gap-3'>
+              <div className='bg-primary text-primary-foreground rounded-lg p-2'>
+                {notification.icon}
               </div>
-            </>
+              <div>
+                <p className='w-[90%] truncate overflow-hidden font-medium whitespace-nowrap'>
+                  {notification.title}
+                </p>
+                <p className='text-muted-foreground text-sm'>
+                  {notification.time}
+                </p>
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -113,11 +108,8 @@ function RightSection() {
 
         <div className='scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-border scrollbar-track-transparent mt-4 flex max-h-[400px] flex-col gap-1 overflow-x-hidden overflow-y-auto'>
           {activitiesData.map((activity, index) => (
-            <>
-              <div
-                key={index}
-                className='border-border flex items-center gap-3'
-              >
+            <div key={index}>
+              <div className='border-border flex items-center gap-3'>
                 <Avatar>
                   <AvatarImage
                     src={activity.avatar}
@@ -142,7 +134,7 @@ function RightSection() {
                 orientation='vertical'
                 className='ml-5 !h-[20px] last:hidden'
               />
-            </>
+            </div>
           ))}
         </div>
       </div>

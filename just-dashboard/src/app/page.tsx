@@ -1,6 +1,7 @@
 'use client';
 
 import ECommerce from '@/components/ECommerce';
+import Head from 'next/head';
 import {
   useGetDashboardStatsQuery,
   useUseGetDashboardBarChartQuery,
@@ -19,15 +20,21 @@ export default function Home() {
   const { data: dashboardTableData } = useUseGetDashboardTableDataQuery();
 
   return (
-    <div className='h-full overflow-y-auto'>
-      <ECommerce
-        dashboardStats={dashboardStats}
-        dashboardBarChartData={dashboardBarChartData}
-        dashboardLineChartData={dashboardLineChartData}
-        dashboardPieChartData={dashboardPieChartData}
-        dashboardMapChartData={dashboardMapChartData}
-        dashboardTableData={dashboardTableData}
-      />
-    </div>
+    <>
+      <Head>
+        <title>Dashboard</title>
+        <meta name='description' content='E-Commerce Dashboard' />
+      </Head>
+      <div className='h-full overflow-y-auto'>
+        <ECommerce
+          dashboardStats={dashboardStats}
+          dashboardBarChartData={dashboardBarChartData}
+          dashboardLineChartData={dashboardLineChartData}
+          dashboardPieChartData={dashboardPieChartData}
+          dashboardMapChartData={dashboardMapChartData}
+          dashboardTableData={dashboardTableData}
+        />
+      </div>
+    </>
   );
 }

@@ -58,6 +58,7 @@ import {
 } from '@/redux/slice/orderApi';
 import { Skeleton } from '@/components/ui/skeleton';
 import AddNewOrder from '@/components/CreateNewOrder';
+import Head from 'next/head';
 
 TimeAgo.addDefaultLocale(en);
 
@@ -406,76 +407,82 @@ function OrderPage() {
   const columns = getColumns(deleteAOrder);
 
   return (
-    <section className='h-full w-full flex-1 overflow-y-scroll p-8 pb-20'>
-      <h2 className='text-xl font-semibold'>Order List</h2>
+    <>
+      <Head>
+        <title>Dashboard</title>
+        <meta name='description' content='E-Commerce Dashboard' />
+      </Head>
+      <section className='h-full w-full flex-1 overflow-y-scroll p-8 pb-20'>
+        <h2 className='text-xl font-semibold'>Order List</h2>
 
-      {error && (
-        <div className='bg-destructive/20 text-destructive-foreground my-4 flex items-center gap-2 rounded-md p-2 text-sm font-semibold'>
-          Failed to load orders. Please try again.
-        </div>
-      )}
-
-      {deleteError && (
-        <div className='bg-destructive/20 text-destructive-foreground my-4 flex items-center gap-2 rounded-md p-2 text-sm font-semibold'>
-          <SealWarningIcon size={16} weight='duotone' />{' '}
-          <span>Failed to delete order. Please try again.</span>
-        </div>
-      )}
-
-      <div className='bg-card mt-4 flex items-center justify-between rounded-lg p-1'>
-        <div className='flex items-center rounded-md px-2 py-1'>
-          <Button
-            size={'icon'}
-            variant={'ghost'}
-            onClick={() => setIsCreateDialogOpen(true)}
-          >
-            <PlusIcon size={20} />
-          </Button>
-          <Button size={'icon'} variant={'ghost'}>
-            <FunnelSimpleIcon size={20} />
-          </Button>
-          <Button size={'icon'} variant={'ghost'}>
-            <ArrowsDownUpIcon size={20} />
-          </Button>
-          <Button size={'icon'} variant={'ghost'} onClick={() => refetch()}>
-            <ArrowClockwiseIcon
-              size={20}
-              className={`${(isLoading || isFetching) && 'animate-spin'}`}
-            />
-          </Button>
-        </div>
-
-        <div className='text-foreground/50 mr-2 hidden w-[220px] items-center justify-center rounded-md bg-black/20 px-2 py-1 sm:flex'>
-          <Search size={20} className='mr-1' />
-          <input
-            type='text'
-            placeholder='Search'
-            className='placeholder:text-secondary-foreground/30 rounded-md border-0 text-sm shadow-none ring-0 outline-none focus:ring-0'
-          />
-          <CommandIcon className='text-lg' />
-          <span>/</span>
-        </div>
-        <Button size={'icon'} variant={'ghost'} className='flex sm:hidden'>
-          <Search size={20} />
-        </Button>
-      </div>
-
-      <div className='mt-4 rounded-lg'>
-        {isLoading ? (
-          <div className='space-y-2'>
-            <Skeleton className='h-80 w-full rounded-md' />
+        {error && (
+          <div className='bg-destructive/20 text-destructive-foreground my-4 flex items-center gap-2 rounded-md p-2 text-sm font-semibold'>
+            Failed to load orders. Please try again.
           </div>
-        ) : orderData ? (
-          <DataTable columns={columns} data={orderData} />
-        ) : (
-          <div className='p-4 text-center'>No orders found.</div>
         )}
-      </div>
-      <AddNewOrder
-        isOpen={isCreateDialogOpen}
-        onOpenChange={() => setIsCreateDialogOpen(!isCreateDialogOpen)}
-      />
-    </section>
+
+        {deleteError && (
+          <div className='bg-destructive/20 text-destructive-foreground my-4 flex items-center gap-2 rounded-md p-2 text-sm font-semibold'>
+            <SealWarningIcon size={16} weight='duotone' />{' '}
+            <span>Failed to delete order. Please try again.</span>
+          </div>
+        )}
+
+        <div className='bg-card mt-4 flex items-center justify-between rounded-lg p-1'>
+          <div className='flex items-center rounded-md px-2 py-1'>
+            <Button
+              size={'icon'}
+              variant={'ghost'}
+              onClick={() => setIsCreateDialogOpen(true)}
+            >
+              <PlusIcon size={20} />
+            </Button>
+            <Button size={'icon'} variant={'ghost'}>
+              <FunnelSimpleIcon size={20} />
+            </Button>
+            <Button size={'icon'} variant={'ghost'}>
+              <ArrowsDownUpIcon size={20} />
+            </Button>
+            <Button size={'icon'} variant={'ghost'} onClick={() => refetch()}>
+              <ArrowClockwiseIcon
+                size={20}
+                className={`${(isLoading || isFetching) && 'animate-spin'}`}
+              />
+            </Button>
+          </div>
+
+          <div className='text-foreground/50 mr-2 hidden w-[220px] items-center justify-center rounded-md bg-black/20 px-2 py-1 sm:flex'>
+            <Search size={20} className='mr-1' />
+            <input
+              type='text'
+              placeholder='Search'
+              className='placeholder:text-secondary-foreground/30 rounded-md border-0 text-sm shadow-none ring-0 outline-none focus:ring-0'
+            />
+            <CommandIcon className='text-lg' />
+            <span>/</span>
+          </div>
+          <Button size={'icon'} variant={'ghost'} className='flex sm:hidden'>
+            <Search size={20} />
+          </Button>
+        </div>
+
+        <div className='mt-4 rounded-lg'>
+          {isLoading ? (
+            <div className='space-y-2'>
+              <Skeleton className='h-80 w-full rounded-md' />
+            </div>
+          ) : orderData ? (
+            <DataTable columns={columns} data={orderData} />
+          ) : (
+            <div className='p-4 text-center'>No orders found.</div>
+          )}
+        </div>
+        <AddNewOrder
+          isOpen={isCreateDialogOpen}
+          onOpenChange={() => setIsCreateDialogOpen(!isCreateDialogOpen)}
+        />
+      </section>
+    </>
   );
 }
 

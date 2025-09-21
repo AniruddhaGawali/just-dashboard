@@ -231,10 +231,10 @@ export function DashboardSidebar() {
                             <SidebarMenuSub>
                               {item.subLabels.map((subItem) => (
                                 <SidebarMenuSubItem key={subItem.label}>
-                                  <SidebarMenuSubButton>
-                                    <Link href={subItem.link ?? '#'}>
-                                      <span>{subItem.label}</span>
-                                    </Link>
+                                  <SidebarMenuSubButton
+                                    href={subItem.link ?? '#'}
+                                  >
+                                    <span>{subItem.label}</span>
                                   </SidebarMenuSubButton>
                                 </SidebarMenuSubItem>
                               ))}

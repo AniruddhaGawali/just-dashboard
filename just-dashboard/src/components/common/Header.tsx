@@ -60,8 +60,8 @@ function Header({ onToggleRightSection }: Props) {
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {pathSegments.map((segment, index) => (
-                <>
-                  <BreadcrumbSeparator key={index}>/</BreadcrumbSeparator>
+                <div key={index} className='flex items-center gap-2'>
+                  <BreadcrumbSeparator>/</BreadcrumbSeparator>
                   <BreadcrumbItem>
                     <BreadcrumbLink
                       href={`/${pathSegments.slice(0, index + 1).join('/')}`}
@@ -70,7 +70,7 @@ function Header({ onToggleRightSection }: Props) {
                       {capitalize(segment)}
                     </BreadcrumbLink>
                   </BreadcrumbItem>
-                </>
+                </div>
               ))}
             </BreadcrumbList>
           </Breadcrumb>
