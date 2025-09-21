@@ -1,16 +1,15 @@
 import { transformResponse } from '@/utils';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { use } from 'react';
 
 export const dashboardApi = createApi({
   reducerPath: 'dashboardApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_BASE_URL!,
+    baseUrl: process.env.NEXT_PUBLIC_BASE_URL! + '/dashboard',
   }),
   endpoints: (builder) => ({
     getDashboardStats: builder.query<DashboardStats[], void>({
       query: () => ({
-        url: '/dashboard/stats',
+        url: '/stats',
         method: 'GET',
       }),
       transformResponse: transformResponse,
@@ -18,7 +17,7 @@ export const dashboardApi = createApi({
 
     useGetDashboardBarChart: builder.query<DashboardBarChartData[], void>({
       query: () => ({
-        url: '/dashboard/barchart',
+        url: '/barchart',
         method: 'GET',
       }),
       transformResponse: transformResponse,
@@ -26,7 +25,7 @@ export const dashboardApi = createApi({
 
     useGetDashboardLineChart: builder.query<DashboardBarChartData[], void>({
       query: () => ({
-        url: '/dashboard/linechart',
+        url: '/linechart',
         method: 'GET',
       }),
       transformResponse: transformResponse,
@@ -34,7 +33,7 @@ export const dashboardApi = createApi({
 
     useGetDashboardPieChart: builder.query<DashboardPieChartData, void>({
       query: () => ({
-        url: '/dashboard/piechart',
+        url: '/piechart',
         method: 'GET',
       }),
       transformResponse: transformResponse,
@@ -42,7 +41,7 @@ export const dashboardApi = createApi({
 
     useGetDashboardMapChart: builder.query<DashboardMapChartData, void>({
       query: () => ({
-        url: '/dashboard/geochart',
+        url: '/geochart',
         method: 'GET',
       }),
       transformResponse: transformResponse,
@@ -50,7 +49,7 @@ export const dashboardApi = createApi({
 
     useGetDashboardTableData: builder.query<DashboardTableData[], void>({
       query: () => ({
-        url: '/dashboard/top-selling-product',
+        url: '/top-selling-product',
         method: 'GET',
       }),
       transformResponse: transformResponse,

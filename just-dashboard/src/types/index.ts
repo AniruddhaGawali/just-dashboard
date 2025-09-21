@@ -11,12 +11,24 @@ type Order = {
   project: string;
   address: string;
   date: string;
-  status: 'In Progress' | 'Complete' | 'Approved' | 'Rejected' | 'Pending';
+  status:
+    | 'InProgress'
+    | 'Complete'
+    | 'Approved'
+    | 'Rejected'
+    | 'Pending'
+    | number;
 };
-
+enum OrderStatus {
+  InProgress = 'In Progress',
+  Complete = 'Complete',
+  Approved = 'Approved',
+  Rejected = 'Rejected',
+  Pending = 'Pending',
+}
 type User = {
   name: string;
-  avatarUrl: string;
+  avatar_url: string;
 };
 
 type DashboardStats = {

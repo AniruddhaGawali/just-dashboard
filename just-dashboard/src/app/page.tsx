@@ -8,7 +8,7 @@ import {
   useUseGetDashboardPieChartQuery,
   useUseGetDashboardMapChartQuery,
   useUseGetDashboardTableDataQuery,
-} from '@/redux/slice/dashboard/dashboardApi';
+} from '@/redux/slice/dashboardApi';
 
 export default function Home() {
   const { data: dashboardStats } = useGetDashboardStatsQuery();

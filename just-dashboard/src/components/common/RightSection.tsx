@@ -111,7 +111,7 @@ function RightSection() {
           Activities
         </h3>
 
-        <div className='scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-border scrollbar-track-transparent mt-4 flex max-h-[400px] flex-col gap-1 overflow-y-auto'>
+        <div className='scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-border scrollbar-track-transparent mt-4 flex max-h-[400px] flex-col gap-1 overflow-x-hidden overflow-y-auto'>
           {activitiesData.map((activity, index) => (
             <>
               <div

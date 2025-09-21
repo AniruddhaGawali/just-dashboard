@@ -31,7 +31,7 @@ export default function RootLayout({
 }>) {
   const [isRightSectionOpen, setRightSectionOpen] = useState(false);
   const rightSectionRef = useRef<ImperativePanelHandle>(null);
-  const { width, height } = useWindowSize();
+  const { width } = useWindowSize();
 
   const shouldSheetOpen = width ? width < 1024 : false;
 
@@ -84,9 +84,9 @@ export default function RootLayout({
 
                     {shouldSheetOpen && (
                       <Sheet
-                        onOpenChange={() =>
-                          setRightSectionOpen(!isRightSectionOpen)
-                        }
+                        onOpenChange={onToggleRightSection}
+                        defaultOpen={false}
+                        modal={true}
                         open={isRightSectionOpen}
                       >
                         <SheetContent className='w-[400px] sm:w-[540px]'>
