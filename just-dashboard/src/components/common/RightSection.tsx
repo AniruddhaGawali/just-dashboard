@@ -108,7 +108,7 @@ function RightSection() {
 
         <div className='scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-border scrollbar-track-transparent mt-4 flex max-h-[400px] flex-col gap-1 overflow-x-hidden overflow-y-auto'>
           {activitiesData.map((activity, index) => (
-            <div key={index}>
+            <div key={index} className='space-y-2'>
               <div className='border-border flex items-center gap-3'>
                 <Avatar>
                   <AvatarImage
@@ -132,7 +132,7 @@ function RightSection() {
               </div>
               <Separator
                 orientation='vertical'
-                className='ml-5 !h-[20px] last:hidden'
+                className={`ml-5 !h-[20px] ${index == activitiesData.length - 1 ? 'hidden' : ''}`}
               />
             </div>
           ))}
