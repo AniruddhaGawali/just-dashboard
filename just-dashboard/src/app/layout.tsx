@@ -63,17 +63,19 @@ export default function RootLayout({
                       <Header onToggleRightSection={onToggleRightSection} />
                       <div className='flex-1 overflow-y-auto'>{children}</div>
                     </ResizablePanel>
-                    <ResizablePanel
-                      ref={rightSectionRef}
-                      maxSize={25}
-                      collapsible={true}
-                      collapsedSize={0}
-                      onCollapse={() => setRightSectionOpen(false)}
-                      onExpand={() => setRightSectionOpen(true)}
-                      className='hidden transition-all duration-300 ease-in-out lg:flex'
-                    >
-                      <RightSection />
-                    </ResizablePanel>
+                    {!shouldSheetOpen && (
+                      <ResizablePanel
+                        ref={rightSectionRef}
+                        maxSize={25}
+                        collapsible={true}
+                        collapsedSize={0}
+                        onCollapse={() => setRightSectionOpen(false)}
+                        onExpand={() => setRightSectionOpen(true)}
+                        className='hidden transition-all duration-300 ease-in-out lg:flex'
+                      >
+                        <RightSection />
+                      </ResizablePanel>
+                    )}
 
                     {shouldSheetOpen && (
                       <Sheet

@@ -445,7 +445,7 @@ function OrderPage() {
           </Button>
         </div>
 
-        <div className='text-foreground/50 mr-2 flex w-[220px] items-center justify-center rounded-md bg-black/20 px-2 py-1'>
+        <div className='text-foreground/50 mr-2 hidden w-[220px] items-center justify-center rounded-md bg-black/20 px-2 py-1 sm:flex'>
           <Search size={20} className='mr-1' />
           <input
             type='text'
@@ -455,6 +455,9 @@ function OrderPage() {
           <CommandIcon className='text-lg' />
           <span>/</span>
         </div>
+        <Button size={'icon'} variant={'ghost'} className='flex sm:hidden'>
+          <Search size={20} />
+        </Button>
       </div>
 
       <div className='mt-4 rounded-lg'>
