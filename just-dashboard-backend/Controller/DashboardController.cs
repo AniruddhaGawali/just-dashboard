@@ -16,7 +16,7 @@ namespace JustDashboardBackend.Controller
                 new CustomerDashboardStatsModel { Title = "Customers", Value = 3781, GrowthPercent = 11.1 },
                 new CustomerDashboardStatsModel { Title = "Order", Value = 1219, GrowthPercent = -0.03 },
                 new CustomerDashboardStatsModel { Title = "Revenue", Value = 695, GrowthPercent = 15.3 },
-                new CustomerDashboardStatsModel { Title = "Growth", Value = 30, GrowthPercent = 6.08 }
+                new CustomerDashboardStatsModel { Title = "Growth", Value = 30.1, GrowthPercent = 6.08 }
             };
             return Ok(stats);
         }

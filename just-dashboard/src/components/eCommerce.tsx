@@ -40,50 +40,8 @@ import { ChartData } from 'chart.js';
 import RoundedDoughnutChart from './RoundedDoughnutChart';
 import { useTheme } from 'next-themes';
 
-const chartData = [
-  { month: 'January', projections: 18, actuals: 22 },
-  { month: 'February', projections: 22, actuals: 26 },
-  { month: 'March', projections: 18, actuals: 22 },
-  { month: 'April', projections: 25, actuals: 29 },
-  { month: 'May', projections: 17, actuals: 19 },
-  { month: 'June', projections: 22, actuals: 26 },
-];
-
-const lineChartData = [
-  { month: 'January', projections: 85, actuals: 20 },
-  { month: 'February', projections: 70, actuals: 40 },
-  { month: 'March', projections: 50, actuals: 55 },
-  { month: 'April', projections: 30, actuals: 60 },
-  { month: 'May', projections: 25, actuals: 50 },
-  { month: 'June', projections: 35, actuals: 35 }, // The lines intersect here
-  { month: 'July', projections: 55, actuals: 25 },
-  { month: 'August', projections: 75, actuals: 30 },
-  { month: 'September', projections: 90, actuals: 45 },
-];
-
-const mapChartData = [
-  {
-    location: 'New York',
-    revenue: 72_000,
-  },
-  {
-    location: 'San Francisco',
-    revenue: 39_000,
-  },
-  {
-    location: 'Sydney',
-    revenue: 25_000,
-  },
-  {
-    location: 'Singapore',
-    revenue: 61_000,
-  },
-];
-
-const mapTotalRevenue = mapChartData.reduce(
-  (total, item) => total + item.revenue,
-  0
-);
+import { Skeleton } from './ui/skeleton';
+import { capitalize, formatNumber } from '@/utils';
 
 const tableData = [
   {
@@ -118,79 +76,84 @@ const tableData = [
   },
 ];
 
-const pieChartPrice = [300.56, 135.18, 154.02, 48.96];
-const pieChartPriceSum = pieChartPrice.reduce((a, b) => a + b, 0);
-const piechartData: ChartData<'doughnut'> = {
-  labels: ['Direct', 'Affilliate', 'Sponsored', 'E-mail'],
-  datasets: [
-    {
-      data: [
-        parseFloat(((pieChartPrice[0] / pieChartPriceSum) * 100).toFixed(1)),
-        parseFloat(((pieChartPrice[1] / pieChartPriceSum) * 100).toFixed(1)),
-        parseFloat(((pieChartPrice[2] / pieChartPriceSum) * 100).toFixed(1)),
-        parseFloat(((pieChartPrice[3] / pieChartPriceSum) * 100).toFixed(1)),
-      ],
-      backgroundColor: ['#95A4FC', '#C6C7F8', '#BAEDBD', '#B1E3FF'],
-      borderWidth: 0,
-    },
-  ],
-};
-
 const chartConfig = {
-  projections: {
+  projection: {
     label: 'Projections',
     color: 'var(--chart-1)',
   },
-  actuals: {
+  actual: {
     label: 'Actuals',
     color: 'var(--chart-2)',
   },
 } satisfies ChartConfig;
 
-const ECommerceStats = () => (
-  <div className='grid h-full grid-cols-2 grid-rows-2 gap-4'>
-    <div className='bg-primary text-primary-foreground flex min-h-[120px] w-full flex-col items-start justify-around rounded-2xl px-8 py-4'>
-      <div className='text-md font-semibold'>Customer</div>
-      <div className='flex items-start justify-center gap-4'>
-        <div className='text-3xl font-semibold'>3,781</div>
-        <div className='flex items-center justify-center gap-2 text-sm'>
-          +11.1% <TrendUpIcon size={16} weight='duotone' />
-        </div>
-      </div>
-    </div>
+const ECommerceStats = ({
+  dashboardStats,
+}: {
+  dashboardStats?: DashboardStats[];
+}) => {
+  const colors = [
+    'bg-primary text-primary-foreground',
+    'bg-card text-card-foreground',
+    'bg-card text-card-foreground',
+    'bg-primary/85 text-primary-foreground',
+  ];
 
-    <div className='bg-card text-card-foreground flex min-h-[120px] w-full flex-col items-start justify-around rounded-2xl px-8 py-4'>
-      <div className='text-md font-semibold'>Order</div>
-      <div className='flex items-start justify-center gap-4'>
-        <div className='text-3xl font-semibold'>1,219</div>
-        <div className='flex items-center justify-center gap-2 text-sm'>
-          -0.03% <TrendDownIcon size={16} weight='duotone' />
-        </div>
-      </div>
-    </div>
+  const formatNumberType = [null, null, 'currency', null];
 
-    <div className='bg-card text-card-foreground flex min-h-[120px] w-full flex-col items-start justify-around rounded-2xl px-8 py-4'>
-      <div className='text-md font-semibold'>Revenue</div>
-      <div className='flex items-start justify-center gap-4'>
-        <div className='text-3xl font-semibold'>$695</div>
-        <div className='flex items-center justify-center gap-2 text-sm'>
-          +15.3% <TrendUpIcon size={16} weight='duotone' />
-        </div>
+  if (!dashboardStats) {
+    return (
+      <div className='grid h-full grid-cols-2 grid-rows-2 gap-4'>
+        {Array.from({ length: 4 }).map((_, index) => (
+          <Skeleton
+            className='bg-card flex min-h-[120px] w-full flex-col items-start justify-around rounded-2xl px-8 py-4'
+            key={index}
+          />
+        ))}
       </div>
-    </div>
+    );
+  }
 
-    <div className='bg-primary/85 text-primary-foreground flex min-h-[120px] w-full flex-col items-start justify-around rounded-2xl px-8 py-4'>
-      <div className='text-md font-semibold'>Growth</div>
-      <div className='flex items-start justify-center gap-4'>
-        <div className='text-3xl font-semibold'>30.1%</div>
-        <div className='flex items-center justify-center gap-2 text-sm'>
-          +6.08% <TrendUpIcon size={16} weight='duotone' />
+  return (
+    <div className='grid h-full grid-cols-2 grid-rows-2 gap-4'>
+      {dashboardStats.map((stat, index) => (
+        <div
+          key={stat.title + index}
+          className={`flex min-h-[120px] w-full flex-col items-start justify-around rounded-2xl px-8 py-4 ${colors[index]} `}
+        >
+          <div className='text-md font-semibold'>{stat.title}</div>
+          <div className='flex items-start justify-center gap-4'>
+            <div className='text-3xl font-semibold'>
+              {formatNumber(stat.value, formatNumberType[index])}
+            </div>
+            <div className='flex items-center justify-center gap-2 text-sm'>
+              {stat.growth_percent}%
+              {stat.growth_percent >= 0 ? (
+                <TrendUpIcon size={16} weight='duotone' />
+              ) : (
+                <TrendDownIcon size={16} weight='duotone' />
+              )}
+            </div>
+          </div>
         </div>
-      </div>
+      ))}
     </div>
-  </div>
-);
-function ChartBarStacked() {
+  );
+};
+
+function ChartBarStacked({ data }: { data?: DashboardBarChartData[] }) {
+  if (!data) {
+    return (
+      <Skeleton className='h-full w-full rounded-xl'>
+        <Card className='h-full border-none'>
+          <CardHeader>
+            <CardTitle>Projections vs Actuals</CardTitle>
+          </CardHeader>
+        </Card>
+      </Skeleton>
+    );
+  }
+
   return (
     <Card className='border-none'>
       <CardHeader>
@@ -198,7 +161,7 @@ function ChartBarStacked() {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData} barSize={20}>
+          <BarChart accessibilityLayer data={data} barSize={20}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey='month'
@@ -217,15 +180,15 @@ function ChartBarStacked() {
             />
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
             <Bar
-              dataKey='projections'
+              dataKey='projection'
               stackId='a'
-              fill='var(--color-projections)'
+              fill='var(--color-projection)'
               radius={[0, 0, 4, 4]}
             />
             <Bar
-              dataKey='actuals'
+              dataKey='actual'
               stackId='a'
-              fill='var(--color-actuals)'
+              fill='var(--color-actual)'
               radius={[4, 4, 0, 0]}
             />
           </BarChart>
@@ -235,7 +198,21 @@ function ChartBarStacked() {
   );
 }
 
-function ChartLineMultiple() {
+function ChartLineMultiple({ data }: { data?: DashboardBarChartData[] }) {
+  if (!data) {
+    return (
+      <Skeleton className='h-full w-full rounded-xl'>
+        <Card className='max-h-xl h-full w-full border-none'>
+          <CardHeader>
+            <CardTitle className='flex items-center gap-4'>
+              <span>Revenue</span>
+            </CardTitle>
+          </CardHeader>
+        </Card>
+      </Skeleton>
+    );
+  }
+
   return (
     <Card className='max-h-xl w-full border-none'>
       <CardHeader>
@@ -256,7 +233,7 @@ function ChartLineMultiple() {
         <ChartContainer config={chartConfig} className='max-h-[300px] w-full'>
           <LineChart
             accessibilityLayer
-            data={lineChartData}
+            data={data}
             margin={{
               left: 12,
               right: 12,
@@ -281,16 +258,16 @@ function ChartLineMultiple() {
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Line
-              dataKey='projections'
+              dataKey='projection'
               type='monotone'
-              stroke='var(--color-projections)'
+              stroke='var(--color-projection)'
               strokeWidth={2}
               dot={false}
             />
             <Line
-              dataKey='actuals'
+              dataKey='actual'
               type='monotone'
-              stroke='var(--color-actuals)'
+              stroke='var(--color-actual)'
               strokeWidth={2}
               dot={false}
             />
@@ -301,7 +278,32 @@ function ChartLineMultiple() {
   );
 }
 
-function ChartMap({ isDark }: { isDark?: boolean }) {
+function ChartMap({
+  isDark,
+  data,
+}: {
+  isDark?: boolean;
+  data?: DashboardMapChartData;
+}) {
+  if (!data) {
+    return (
+      <Skeleton className='h-full w-full rounded-xl'>
+        <Card className='h-full border-none'>
+          <CardHeader>
+            <CardTitle>Revenue by Location</CardTitle>
+          </CardHeader>
+        </Card>
+      </Skeleton>
+    );
+  }
+
+  const mapChartPrice = Object.values(data);
+  const mapTotalRevenue = mapChartPrice.reduce((a, b) => a + b, 0);
+  const mapChartData = mapChartPrice.map((price, index) => ({
+    location: capitalize(Object.keys(data)[index].split('_').join(' ')),
+    revenue: price,
+  }));
+
   return (
     <Card className='h-full border-none'>
       <CardHeader>
@@ -328,7 +330,7 @@ function ChartMap({ isDark }: { isDark?: boolean }) {
                   {(item.revenue / 1000).toFixed(0)}k
                 </div>
               </div>
-              {/* Replace Progress component with custom implementation */}
+
               <div className='bg-muted h-1 w-full overflow-hidden rounded-full'>
                 <div
                   className='bg-secondary h-full'
@@ -345,7 +347,19 @@ function ChartMap({ isDark }: { isDark?: boolean }) {
   );
 }
 
-function TableStats() {
+function TableStats({ data }: { data?: DashboardTableData[] }) {
+  if (!data) {
+    return (
+      <Skeleton className='h-full w-full rounded-xl'>
+        <Card className='h-full border-none'>
+          <CardHeader>
+            <CardTitle>Top Selling Products</CardTitle>
+          </CardHeader>
+        </Card>
+      </Skeleton>
+    );
+  }
+
   return (
     <Card className='h-full border-none'>
       <CardHeader>
@@ -364,7 +378,7 @@ function TableStats() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {tableData.map((item) => (
+            {data.map((item) => (
               <TableRow key={item.name} className='border-none'>
                 <TableCell className='h-14 font-medium'>{item.name}</TableCell>
                 <TableCell>{item.price}</TableCell>
@@ -379,11 +393,43 @@ function TableStats() {
   );
 }
 
-function PieChartStats() {
+function PieChartStats({ data }: { data?: DashboardPieChartData }) {
+  if (!data) {
+    return (
+      <Skeleton className='h-full w-full rounded-xl'>
+        <Card className='h-full border-none'>
+          <CardHeader>
+            <CardTitle>Total Sales</CardTitle>
+          </CardHeader>
+        </Card>
+      </Skeleton>
+    );
+  }
+
+  const pieChartPrice = Object.values(data);
+  const pieChartPriceSum = pieChartPrice.reduce((a, b) => a + b, 0);
+  const piechartData: ChartData<'doughnut'> = {
+    labels: Object.keys(data).map((item) =>
+      capitalize(item.split('_').join(' '))
+    ),
+    datasets: [
+      {
+        data: [
+          parseFloat(((pieChartPrice[0] / pieChartPriceSum) * 100).toFixed(1)),
+          parseFloat(((pieChartPrice[1] / pieChartPriceSum) * 100).toFixed(1)),
+          parseFloat(((pieChartPrice[2] / pieChartPriceSum) * 100).toFixed(1)),
+          parseFloat(((pieChartPrice[3] / pieChartPriceSum) * 100).toFixed(1)),
+        ],
+        backgroundColor: ['#95A4FC', '#C6C7F8', '#BAEDBD', '#B1E3FF'],
+        borderWidth: 0,
+      },
+    ],
+  };
+
   return (
     <Card className='flex h-full flex-col border-none'>
       <CardHeader className='items-center pb-0'>
-        <CardTitle>Pie Chart - Donut</CardTitle>
+        <CardTitle>Total Sales</CardTitle>
       </CardHeader>
       <CardContent className='flex h-full flex-1 flex-col justify-between pb-0'>
         <RoundedDoughnutChart piechartData={piechartData} />
@@ -415,32 +461,48 @@ function PieChartStats() {
   );
 }
 
-const ECommerce = () => {
+type ECommerceProp = {
+  dashboardStats?: DashboardStats[];
+  dashboardBarChartData?: DashboardBarChartData[];
+  dashboardLineChartData?: DashboardBarChartData[];
+  dashboardPieChartData?: DashboardPieChartData;
+  dashboardMapChartData?: DashboardMapChartData;
+  dashboardTableData?: DashboardTableData[];
+};
+
+const ECommerce = ({
+  dashboardStats,
+  dashboardBarChartData,
+  dashboardLineChartData,
+  dashboardPieChartData,
+  dashboardMapChartData,
+  dashboardTableData,
+}: ECommerceProp) => {
   const { theme } = useTheme();
   return (
     <section className='w-full flex-1 p-8 pb-20'>
       <h2 className='text-xl font-semibold'>eCommerce</h2>
       <div className='mt-4 grid grid-cols-4 gap-4'>
         <div className='col-span-2'>
-          <ECommerceStats />
+          <ECommerceStats dashboardStats={dashboardStats} />
         </div>
 
         <div className='col-span-2'>
-          <ChartBarStacked />
+          <ChartBarStacked data={dashboardBarChartData} />
         </div>
 
         <div className='col-span-3'>
-          <ChartLineMultiple />
+          <ChartLineMultiple data={dashboardLineChartData} />
         </div>
         <div className='col-span-1'>
-          <ChartMap isDark={theme === 'dark'} />
+          <ChartMap isDark={theme === 'dark'} data={dashboardMapChartData} />
         </div>
 
         <div className='col-span-3'>
-          <TableStats />
+          <TableStats data={dashboardTableData} />
         </div>
         <div className='col-span-1'>
-          <PieChartStats />
+          <PieChartStats data={dashboardPieChartData} />
         </div>
       </div>
     </section>

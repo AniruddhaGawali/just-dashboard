@@ -18,3 +18,26 @@ type User = {
   name: string;
   avatarUrl: string;
 };
+
+type DashboardStats = {
+  title: string;
+  value: number;
+  growth_percent: number;
+};
+
+type DashboardBarChartData = {
+  month: string;
+  projection: number;
+  actual: number;
+};
+
+type DashboardPieChartData = Record<string, number>;
+
+type DashboardMapChartData = Record<string, number>;
+
+type DashboardTableData = {
+  name: string;
+  price: number;
+  quantity: number;
+  amount: number;
+};
